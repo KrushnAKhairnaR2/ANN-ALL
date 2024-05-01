@@ -1,0 +1,97 @@
+
+// linear activation function
+
+import numpy as np
+from matplotlib import pyplot as plt
+
+# Linear activation Function
+def linear(x):
+    ''' y = f(x) It returns the input as it is'''
+    return x
+
+# Generating data to plot
+x_data = np.linspace(-6,6,100)
+y_data = linear(x_data)
+
+# Plotting
+plt.plot(x_data, y_data)
+plt.title('Linear Activation Function')
+plt.legend(['f(x) = x'])
+plt.grid()
+plt.show()
+
+
+// sigmoid activation function
+
+
+import numpy as np 
+def sig(x):
+ return 1/(1 + np.exp(-x))
+
+
+x = 1.0
+print('Applying Sigmoid Activation on (%.1f) gives %.1f' % (x, sig(x)))
+
+x = -10.0
+print('Applying Sigmoid Activation on (%.1f) gives %.1f' % (x, sig(x)))
+
+x = 0.0
+print('Applying Sigmoid Activation on (%.1f) gives %.1f' % (x, sig(x)))
+
+x = 15.0
+print('Applying Sigmoid Activation on (%.1f) gives %.1f' % (x, sig(x)))
+
+x = -2.0
+print('Applying Sigmoid Activation on (%.1f) gives %.1f' % (x, sig(x)))
+
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(-10, 10, 50)   
+p = sig(x)
+plt.xlabel("x") 
+plt.ylabel("Sigmoid(x)")  
+plt.plot(x, p) 
+plt.show()
+
+// rectified linear activation function
+
+from matplotlib import pyplot
+def rectified(x):
+    return max(0.0, x)
+series_in = [x for x in range(-10, 11)]
+series_out = [rectified(x) for x in series_in]
+pyplot.plot(series_in, series_out)
+pyplot.show()
+
+
+
+
+// tanh activation function
+
+
+
+
+from math import exp
+import matplotlib.pyplot as plt 
+
+def tanh(x):
+    return (exp(x)-exp(-x))/(exp(x)+exp(-x))
+
+input = []
+for x in range(-5, 5):
+    input.append(x)
+    
+output = []
+for ip in input:
+    output.append(tanh(ip))
+    
+plt.plot(input, output)
+plt.grid()
+plt.title("tanh activation function")
+plt.xlabel('x')
+plt.ylabel('tanh(x)')
+plt.show()
+
+
+
+
