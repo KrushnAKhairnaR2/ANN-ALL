@@ -1,0 +1,48 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+class Perceptron:
+    def __init__(self, input_size, learning_rate=0.01, epochs=100):
+        self.weights = np.zeros(input_size + 1)
+        self.learning_rate = learning_rate
+        self.epochs = epochs
+
+    def predict(self, inputs):
+        summation = np.dot(inputs, self.weights[1:]) + self.weights[0]
+        return 1 if summation > 0 else 0
+
+    def train(self, training_inputs, labels):
+        for _ in range(self.epochs):
+            for inputs, label in zip(training_inputs, labels):
+                prediction = self.predict(inputs)
+                self.weights[1:] += self.learning_rate * (label - prediction) * inputs
+                self.weights[0] += self.learning_rate * (label - prediction)
+
+
+def plot_decision_boundary(X, y, perceptron):
+    x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, 0.1),
+                           np.arange(x2_min, x2_max, 0.1))
+    Z = np.array([perceptron.predict(np.array([x1, x2])) for x1, x2 in np.c_[xx1.ravel(), xx2.ravel()]])
+    Z = Z.reshape(xx1.shape)
+    plt.contourf(xx1, xx2, Z, alpha=0.4)
+    plt.scatter(X[:, 0], X[:, 1], c=y, marker='o', s=25, edgecolor='k')
+
+
+if __name__ == "__main__":
+    # Define training data
+    X_train = np.array([[2, 3], [4, 5], [6, 7], [8, 9]])
+    y_train = np.array([0, 0, 1, 1])  # Labels: 0 for class A, 1 for class B
+
+    # Initialize and train perceptron
+    perceptron = Perceptron(input_size=2)
+    perceptron.train(X_train, y_train)
+
+    # Plot decision boundary
+    plt.figure(figsize=(8, 6))
+    plot_decision_boundary(X_train, y_train, perceptron)
+    plt.title('Decision Boundary of Perceptron')
+    plt.xlabel('Feature 1')
+    plt.ylabel('Feature 2')
+    plt.show()
